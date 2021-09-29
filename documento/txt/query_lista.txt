@@ -1,0 +1,18 @@
+SELECT 		A.usuario_id AS id,
+							A.usuario_login AS login,
+							A.usuario_nombre AS usu,
+							A.usuario_carnet AS carnet,
+							A.usuario_cedula AS cedula,
+							A.usuario_activo AS status,
+							D.perfil_desc AS perfil,
+							max(E.conexion_fecha_ini )AS fecha_ent FROM usuario AS A 
+							LEFT JOIN rel_perfil_usuario 	AS C ON C.usuario_id 	= A.usuario_id
+							LEFT JOIN perfil 		AS D ON D.perfil_id 	= C.perfil_id
+							LEFT JOIN conexion 		AS E ON E.rel_perfil_usuario_id = A.usuario_id GROUP BY 	A.usuario_id,
+											D.perfil_id,
+											A.usuario_login,
+											A.usuario_nombre,
+											A.usuario_carnet,
+											A.usuario_cedula,
+											A.usuario_activo,
+											D.perfil_desc ORDER BY id asc;
